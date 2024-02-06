@@ -4,7 +4,12 @@
 
 setup() { 
     # Install az cli
-    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+    # curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+    # Check if already logged in
+    if [ $(az account show --query user.name -o tsv) ]; then
+        echo "You're already logged in."
+        exit 0
+    fi
     # Login
     az login --use-device-code
     echo "You're logged in."
@@ -61,8 +66,8 @@ list_resource_groups() {
     az group list -o table
 }
 
-# setup
-check_region
-check_resource_group 
-create_resource_group
-list_resource_groups
+setup
+#check_region
+#check_resource_group 
+#create_resource_group
+#list_resource_groups
